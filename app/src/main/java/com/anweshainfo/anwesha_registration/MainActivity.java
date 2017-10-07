@@ -12,12 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.zxing.Result;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
@@ -56,14 +52,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         mScannerView = new ZXingScannerView(this);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+        mScannerView.resumeCameraPreview(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mScannerView = null;
         mScannerView.stopCamera();
-
+        mScannerView = null;
     }
 
     @Override
