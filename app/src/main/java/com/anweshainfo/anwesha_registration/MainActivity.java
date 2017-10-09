@@ -1,7 +1,6 @@
 package com.anweshainfo.anwesha_registration;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -44,15 +43,19 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();           // Stop camera on pause
+        mScannerView.stopCameraPreview();
     }
 
+
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
         mScannerView = new ZXingScannerView(this);
         mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+
+        // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
+        mScannerView.startCamera();
     }
 
     @Override
@@ -60,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         super.onDestroy();
         mScannerView.stopCamera();
         mScannerView = null;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mScannerView.stopCamera();
     }
 
     @Override
