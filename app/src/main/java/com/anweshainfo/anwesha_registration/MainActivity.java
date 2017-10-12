@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
     }
-
+        //check whether there is permission
     public void checkPermission() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.CAMERA)
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                             "Turn on Camera there");
                     AlertDialog alert1 = builder.create();
                     alert1.show();
-
+                    this.finish();
 
                 }
             }
