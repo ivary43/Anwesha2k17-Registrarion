@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:layout_width="match_parent"
+    android:layout_height="34dp"
+    android:background="@color/cardview_light_background"
+    android:text="Filler"
+    android:textSize="24sp"
+    android:fontFamily="sans-serif-medium"
+    android:id="@+id/event_text_view"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+

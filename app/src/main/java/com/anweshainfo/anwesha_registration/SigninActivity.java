@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
+    import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -183,7 +183,5 @@ public class SigninActivity extends AppCompatActivity {
         emailIDWrapper.setHint(getString(R.string.email_id_hint));
         passwordWrapper.setHint(getString(R.string.password_hint));
     }
-
-
 
 }

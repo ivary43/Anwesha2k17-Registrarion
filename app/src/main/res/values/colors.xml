@@ -8,5 +8,6 @@
     <color name="colorSignUp">#1de9b6</color>
     <color name="colorSponsors">#03A9F4</color>
     <color name="colorPrimaryLight">#eeeeee</color>
-
+    <color name="gray_dark">#b1aeae</color>
+    <color name="drop_dark">#363535</color>
 </resources>
