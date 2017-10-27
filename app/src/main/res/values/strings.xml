@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Anwesha-Registration</string>
     <string name="scan">Scan</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="SignIn">Sign In</string>
+    <string name="email_id_hint">Email ID</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="register_url">http://celesta.org.in/api/register</string>
+    <string name="api_key">iitp</string>
+    <string name="register_param_name">name</string>
+    <string name="register_param_college">college</string>
+    <string name="register_param_emailid">emailid</string>
+    <string name="register_param_password">password</string>
+    <string name="register_param_mobile">mobile</string>
+    <string name="register_param_apiKey">apiKey</string>
+    <string name="JSON_status">status</string>
+    <string name="error_empty_field">Empty Field</string>
+    <string name="message_registration_duplicate">This Email is registered. Please Sign In</string>
+    <string name="url_forgot_password">http://celesta.org.in/reset</string>
+    <string name="url_login">https://celesta.org.in/api/login</string>
+
+
 </resources>

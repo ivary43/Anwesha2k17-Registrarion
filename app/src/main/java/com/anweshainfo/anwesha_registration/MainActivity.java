@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         mScannerView.setAutoFocus(true);
         checkPermission();
 
-
     }
 
     public void Scan(View view) {
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     @Override
     public void onPause() {
-
         super.onPause();
         mScannerView.stopCamera();           // Stop camera on pause
     }
@@ -74,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             //We don't need an explanation because this will definitely require camera access to scan
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     MY_PERMISSIONS_REQUEST_CAMERA);
-
 
         }
     }
