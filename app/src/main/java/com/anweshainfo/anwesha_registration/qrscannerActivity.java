@@ -19,6 +19,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -33,13 +35,15 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
     private ZXingScannerView mScannerView;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
-    private ArrayAdapter<String> spinnerArrayAdapter ;
-    private  String string[] ;
+    private ArrayAdapter<String> spinnerArrayAdapter;
+    private ArrayList<String> string = new ArrayList<>();
+    private ArrayList<String> id = new ArrayList<>();
     @BindView(R.id.scanner)
     LinearLayout scannerView;
 
     @BindView(R.id.spinner_events_name)
-    Spinner eventsspinner ;
+    Spinner eventsspinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +55,11 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         mScannerView.setAutoFocus(true);
         checkPermission();
 
-        string = new String[]{"This "," is ","me "," WD" } ;
+        string = getIntent().getStringArrayListExtra("mEventsName");
+        id = getIntent().getStringArrayListExtra("mEventId");
 
         //set the array adapter
-        spinnerArrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,string) ;
+        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, string);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         eventsspinner.setAdapter(spinnerArrayAdapter);
 
@@ -80,9 +85,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
     }
 
-    public void show ( int i )
-    {
-        Toast.makeText(this,string[i],Toast.LENGTH_LONG).show();
+    public void show(int i) {
+        Toast.makeText(this, string.get(i), Toast.LENGTH_LONG).show();
     }
 
     public void Scan() {

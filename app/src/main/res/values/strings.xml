@@ -14,11 +14,13 @@
     <string name="register_param_password">password</string>
     <string name="register_param_mobile">mobile</string>
     <string name="register_param_apiKey">apiKey</string>
+    <string name="signin_param_username">username</string>
+    <string name="signin_password">password</string>
     <string name="JSON_status">status</string>
     <string name="error_empty_field">Empty Field</string>
     <string name="message_registration_duplicate">This Email is registered. Please Sign In</string>
     <string name="url_forgot_password">http://celesta.org.in/reset</string>
-    <string name="url_login">https://celesta.org.in/api/login</string>
+    <string name="url_login">https://anwesha.info/login</string>
     <string name="select_event_name">Select Event</string>
 
 </resources>

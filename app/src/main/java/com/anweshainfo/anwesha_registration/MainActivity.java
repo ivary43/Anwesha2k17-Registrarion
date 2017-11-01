@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -44,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private String mUrl;
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private Matcher matcher;
+    private ArrayList<String> mEventsName = new ArrayList<>();
+    private ArrayList<String> mEventId = new ArrayList<>();
 
     @BindView(R.id.button_signin)
-    Button buttonSignIn ;
+    Button buttonSignIn;
 
     @BindView(R.id.eamil_id_wrapper_signin)
     TextInputLayout emailIDWrapper;
@@ -78,90 +81,107 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,qrscannerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        //TODO: set the Api call
 //        buttonSignIn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                clearErrors();
-//                boolean b = validateInputs();
-//                if (b) {
-//                    //Code for sending the details
-//                    Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
-//                    buttonSignIn.setVisibility(View.GONE);
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, mUrl,
-//                            new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//                                    Log.v("Response:", response);
-//                                    try {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//                                        int status = Integer.parseInt(jsonObject.getString(getString(R.string.JSON_status)));
-//
-//                                        switch (status) {
-//                                            case 200:
-//                                                Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_LONG).show();
-//                                                int userID = Integer.parseInt(jsonObject.getString("userID"));
-//                                                //TODO:process json response
-//                                                finish();
-//                                                break;
-//                                            case 400:
-//                                                Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
-//                                                break;
-//                                            case 409:
-//                                                Toast.makeText(getApplicationContext(), R.string.message_registration_duplicate, Toast.LENGTH_LONG).show();
-//                                                finish();
-//                                                break;
-//                                            case 403:
-//                                                Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
-//                                                finish();
-//                                                break;
-//                                            default:
-//                                                Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
-//                                        }
-//
-//                                        buttonSignIn.setVisibility(View.VISIBLE);
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-//                            },
-//                            new Response.ErrorListener() {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//                                    Log.v("Error : ", error.toString());
-//                                    error.printStackTrace();
-//                                    Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
-//                                    buttonSignIn.setVisibility(View.VISIBLE);
-//                                }
-//                            }
-//                    ) {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            Map<String, String> params = new HashMap<>();
-//
-//                            return params;
-//                        }
-//
-//                        @Override
-//                        public Map<String, String> getHeaders() throws AuthFailureError {
-//                            Map<String, String> headers = new HashMap<>();
-//                            headers.put("Accept", "application/json");
-//                            return headers;
-//                        }
-//                    };
-//                    mQueue.add(stringRequest);
-//                }
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this,qrscannerActivity.class);
+//                startActivity(intent);
 //            }
 //        });
+
+
+//        //TODO: set the Api call
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearErrors();
+                boolean b = validateInputs();
+                if (b) {
+                    //Code for sending the details
+                    Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
+                    buttonSignIn.setVisibility(View.GONE);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, mUrl,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.v("Response:", response);
+
+
+                                    try {
+
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        int status = Integer.parseInt(jsonObject.getString(getString(R.string.JSON_status)));
+
+                                        switch (status) {
+                                            case 200:
+                                                //filter the eventsname from the response
+                                                mEventsName = filterEventName(jsonObject);
+                                                mEventId=filterEventid(jsonObject) ;
+
+                                                Toast.makeText(getApplicationContext(), "Log In Successful"+mEventsName.size(), Toast.LENGTH_LONG).show();
+
+
+//                                                //filter the eventid
+                                                Intent intent = new Intent(MainActivity.this,qrscannerActivity.class);
+                                                intent.putStringArrayListExtra("mEventsName",mEventsName) ;
+                                                intent.putStringArrayListExtra("mEventId",mEventId) ;
+                                                startActivity(intent);
+
+
+                                                int userID = Integer.parseInt(jsonObject.getString("userID"));
+                                                //TODO:process json response
+                                                finish();
+                                                break;
+                                            case 400:
+                                                Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 409:
+                                                Toast.makeText(getApplicationContext(), R.string.message_registration_duplicate, Toast.LENGTH_LONG).show();
+                                                finish();
+                                                break;
+                                            case 403:
+                                                Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
+                                                finish();
+                                                break;
+                                            default:
+                                                Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        buttonSignIn.setVisibility(View.VISIBLE);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.v("Error : ", error.toString());
+                                    error.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                                    buttonSignIn.setVisibility(View.VISIBLE);
+                                }
+                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(getString(R.string.signin_param_username), mEmail);
+                            params.put(getString(R.string.signin_password), mPassword);
+                            return params;
+                        }
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String> headers = new HashMap<>();
+                            headers.put("Accept", "application/json");
+                            return headers;
+                        }
+                    };
+                    mQueue.add(stringRequest);
+                }
+            }
+        });
     }
 
     private void clearErrors() {
@@ -196,5 +216,55 @@ public class MainActivity extends AppCompatActivity {
         emailIDWrapper.setHint(getString(R.string.email_id_hint));
         passwordWrapper.setHint(getString(R.string.password_hint));
     }
+
+    private ArrayList<String> filterEventName(JSONObject jsonObject) {
+        try {
+            JSONObject special = jsonObject.getJSONObject("special");
+            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
+            //getting the number of count of events
+            int count = eventOrganizer.getInt("eveCount");
+            String name;
+            ArrayList<String> eventName = new ArrayList<>();
+
+
+            //filling the arraylist
+            for (int i = 0; i < count; ++i) {
+                JSONObject events = eventOrganizer.getJSONObject("" + i);
+                name = events.getString("name");
+                eventName.add(name);
+            }
+            return eventName;
+
+        } catch (JSONException e) {
+            Log.e("Mainactivity.class ", " Error in parsing json event " + e.getMessage());
+        }
+        return null;
+    }
+
+    private ArrayList<String> filterEventid(JSONObject jsonObject) {
+        try {
+            JSONObject special = jsonObject.getJSONObject("special");
+            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
+            //getting the number of count of events
+            int count = eventOrganizer.getInt("eveCount");
+            String id;
+            ArrayList<String> eventId = new ArrayList<>();
+            Log.e("dhjfhfdfjjjjjj","this sis ssijfjsds sd ssfsf fsf"+count) ;
+            //filling the arraylist
+            for (int i = 0; i < count; ++i) {
+                JSONObject events = eventOrganizer.getJSONObject("" + i);
+                id = events.getString("id");
+                eventId.add(id);
+            }
+
+            return eventId;
+
+        } catch (JSONException e) {
+            Log.e("Mainactivity.class ", " Error in parsing json id " + e.getMessage());
+        }
+
+        return null;
+    }
+
 
 }
