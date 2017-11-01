@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setHints();
         mQueue = Volley.newRequestQueue(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this).edit();
+
         mUrl = getString(R.string.url_login);
         forgotPassword = (TextView) findViewById(R.id.forgot_password);
 
@@ -97,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 clearErrors();
                 boolean b = validateInputs();
                 if (b) {
+                    //saving username for sharing the uId for post request
+                    sharedPreferences.putString("uID",mEmail);
+                    sharedPreferences.apply();
                     //Code for sending the details
                     Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
                     buttonSignIn.setVisibility(View.GONE);
