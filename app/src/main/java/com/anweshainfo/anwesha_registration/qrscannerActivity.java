@@ -40,6 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static android.R.attr.x;
+
 
 /**
  * Created by manish on 27/10/17.
@@ -81,7 +83,9 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mScannerView = new ZXingScannerView(this);
-        mScannerView.setAutoFocus(true);
+
+
+
         checkPermission();
 
         //Extracting the event data
@@ -138,6 +142,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         setContentView(mScannerView);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+        mScannerView.setAutoFocus(true);
+
     }
 
     @Override
@@ -175,7 +181,26 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         builder.setMessage(rawResult.getText());
         AlertDialog alert1 = builder.create();
         alert1.show();
-        mScannerView.resumeCameraPreview(this);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // starts the scanning back up again
+                        mScannerView.resumeCameraPreview(qrscannerActivity.this);
+                    }
+                });
+            }
+        }).start();
+
     }
 
     //check whether there is permission
