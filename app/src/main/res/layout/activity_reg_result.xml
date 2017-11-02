@@ -4,6 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.anweshainfo.anwesha_registration.reg_result">
+    tools:context="com.anweshainfo.anwesha_registration.reg_result"
+    android:background="@color/colorPrimaryDark"
+    >
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:text="Succesfully Registered Yo"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="42dp"
+        android:gravity="center"
+        />
 
 </android.support.constraint.ConstraintLayout>

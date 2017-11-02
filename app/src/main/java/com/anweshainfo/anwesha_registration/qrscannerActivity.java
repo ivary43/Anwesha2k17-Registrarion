@@ -63,6 +63,10 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
     private String eventName;
     private String eventId;
+    private boolean isPaymentReg = false;
+    private boolean iseveReg = false;
+    private String paymentRegId = "0";
+    private String mMakepaymentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         setContentView(R.layout.event_selector);
         ButterKnife.bind(this);
         mBaseUrl = getResources().getString(R.string.url_register);
+        //mMakepaymentUrl=getResources().getString(R.string.makePaymentUrl);
+
         mQueue = Volley.newRequestQueue(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -95,6 +101,14 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                 //setting the value
                 eventName = string.get(i);
                 eventId = id.get(i);
+                if (eventId.equals(paymentRegId)) {
+                    isPaymentReg = true;
+                    iseveReg = false;
+                } else {
+                    iseveReg = true;
+                    isPaymentReg = false;
+                }
+
             }
 
             @Override
@@ -113,6 +127,9 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
     }
 
+    /**
+     * Helper method to show the value which is selected
+     */
     public void show(int i) {
         Toast.makeText(this, string.get(i), Toast.LENGTH_LONG).show();
     }
@@ -143,10 +160,15 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         Log.v("TAG", rawResult.getText()); // Prints scan results
         Log.v("TAG", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
-        //appending the base url
-        String postUrl = mBaseUrl + rawResult.getText();
-        //make a network call
-        makePost(postUrl);
+        if (iseveReg) {
+            //appending the base url
+            String postUrl = mBaseUrl + rawResult.getText();
+            //make a network call
+            makePost(postUrl);
+        } else if (isPaymentReg) {
+            //launch a new intent to make payment
+            makePaymentReg(rawResult.getText());
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
@@ -190,6 +212,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         }
     }
 
+
     private void makePost(String postUrl) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, postUrl,
@@ -207,7 +230,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                                 case 200:
 
                                     Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_LONG).show();
-
+                                    Intent intent = new Intent(qrscannerActivity.this, reg_result.class);
+                                    startActivity(intent);
                                     break;
                                 case 400:
                                     Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
@@ -256,9 +280,46 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
     }
 
+    /**
+     * @params result returns the uID(ANWESHAID) of the
+     * the id which is anwesha ID registration of id
+     */
+
     private String getuID() {
         String uID = mSharedPreferences.getString("uID", null);
         return uID;
+    }
+
+    /**
+     * @value takes the value of qrcode hashed key
+     * function launches a new intent with the values of
+     * string with the response
+     */
+    private void makePaymentReg(String value) {
+        String requestUrl = mBaseUrl + value;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.e("TAG Volley", response);
+                        //After getting the response put it in string and start the activity
+                        Intent intent = new Intent(qrscannerActivity.this, payment_activity.class);
+                        intent.putExtra("jsonresponse", response);
+                        startActivity(intent);
+                        // Display the first 500 characters of the response string.
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage());
+            }
+        });
+        // Add the request to the RequestQueue.
+        mQueue.add(stringRequest);
     }
 
 

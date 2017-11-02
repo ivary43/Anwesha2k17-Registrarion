@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean b = validateInputs();
                 if (b) {
                     //saving username for sharing the uId for post request
-                    sharedPreferences.putString("uID",mEmail);
+                    sharedPreferences.putString("uID", mEmail);
                     sharedPreferences.apply();
                     //Code for sending the details
                     Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
@@ -115,20 +115,24 @@ public class MainActivity extends AppCompatActivity {
 
                                         JSONObject jsonObject = new JSONObject(response);
                                         int status = Integer.parseInt(jsonObject.getString(getString(R.string.JSON_status)));
+                                        //extracting the key from the user call
+                                        String key = getKey(jsonObject) ;
+                                        sharedPreferences.putString("keyPay", key);
+                                        sharedPreferences.apply();
 
                                         switch (status) {
                                             case 200:
                                                 //filter the eventsname from the response
                                                 mEventsName = filterEventName(jsonObject);
-                                                mEventId=filterEventid(jsonObject) ;
+                                                mEventId = filterEventid(jsonObject);
 
-                                                Toast.makeText(getApplicationContext(), "Log In Successful"+mEventsName.size(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "Log In Successful" + mEventsName.size(), Toast.LENGTH_LONG).show();
 
 
 //                                                //filter the eventid
-                                                Intent intent = new Intent(MainActivity.this,qrscannerActivity.class);
-                                                intent.putStringArrayListExtra("mEventsName",mEventsName) ;
-                                                intent.putStringArrayListExtra("mEventId",mEventId) ;
+                                                Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
+                                                intent.putStringArrayListExtra("mEventsName", mEventsName);
+                                                intent.putStringArrayListExtra("mEventId", mEventId);
                                                 startActivity(intent);
 
 
@@ -253,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
             int count = eventOrganizer.getInt("eveCount");
             String id;
             ArrayList<String> eventId = new ArrayList<>();
-            Log.e("dhjfhfdfjjjjjj","this sis ssijfjsds sd ssfsf fsf"+count) ;
+            Log.e("dhjfhfdfjjjjjj", "this sis ssijfjsds sd ssfsf fsf" + count);
             //filling the arraylist
             for (int i = 0; i < count; ++i) {
                 JSONObject events = eventOrganizer.getJSONObject("" + i);
@@ -270,5 +274,22 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    private  String getKey( JSONObject jsonObject )
+    {
+
+        try {
+            JSONObject special = jsonObject.getJSONObject("special");
+            String key = special.getString("isRegTeam");
+            return  key ;
+
+        }
+        catch ( JSONException e)
+        {
+            Log.e("TAgggggggg",e.getMessage());
+        }
+
+        return  null ;
+
+    }
 
 }
