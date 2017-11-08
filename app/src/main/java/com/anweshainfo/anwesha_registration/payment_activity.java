@@ -39,6 +39,9 @@ public class payment_activity extends AppCompatActivity {
 
     private String jsonresponse;
     private String mPaymentUrl;
+    /**
+     * @personId is the id of the person(the participant who is making the payment )
+     * */
     private String personId;
     private String uId;
     private String key;
@@ -62,6 +65,7 @@ public class payment_activity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(this);
         jsonresponse = getIntent().getStringExtra("jsonresponse");
+
         //function call to make the pID
         personId = getpId(jsonresponse);
 

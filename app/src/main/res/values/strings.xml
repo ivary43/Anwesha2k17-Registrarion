@@ -29,4 +29,10 @@
     <string name="payment_uID">uID</string>
     <string name="payment_amt">amt</string>
     <string name="payment_val">val</string>
+    <string name="payer_name">Name</string>
+    <string name="payer_city">City</string>
+    <string name="payer_feePaid">Fee Paid</string>
+    <string name="payer_college">College</string>
+    <string name="nullvalue">Null</string>
+    <string name="EnterValue">Enter the amount </string>
 </resources>

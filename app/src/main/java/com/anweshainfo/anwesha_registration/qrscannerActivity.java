@@ -83,6 +83,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mScannerView = new ZXingScannerView(this);
+        mScannerView.setAutoFocus(true);
 
 
 
