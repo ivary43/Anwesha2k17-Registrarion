@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.anweshainfo.anwesha_registration.Adapter.CustomSpinnerAdapter;
 import com.google.zxing.Result;
 
 import org.json.JSONException;
@@ -69,7 +70,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private boolean iseveReg = false;
     private String paymentRegId = "0";
     private String mMakepaymentUrl;
-
+    private CustomSpinnerAdapter customSpinnerAdapter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,9 +96,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
 
         //set the array adapter
-        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, string);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        eventsspinner.setAdapter(spinnerArrayAdapter);
+        customSpinnerAdapter  = new CustomSpinnerAdapter( this,string) ;
+        eventsspinner.setAdapter(customSpinnerAdapter);
 
         eventsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="40dp"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_dark_background"
+    
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="46">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_registration_duplicate"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="12dp"
+            android:id="@+id/spinnertextview"
+            android:minHeight="39dp"
+            android:gravity="center_vertical"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/cardview_light_background"
+
+            ></View>
+
+    </LinearLayout>
+
+</LinearLayout>

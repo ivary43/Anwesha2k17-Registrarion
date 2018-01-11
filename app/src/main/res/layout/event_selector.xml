@@ -17,7 +17,7 @@
 
     <android.support.v7.widget.AppCompatSpinner
         android:layout_width="match_parent"
-        android:layout_height="39dp"
+        android:layout_height="40dp"
         android:id="@+id/spinner_events_name"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
