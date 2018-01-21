@@ -12,6 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,6 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static android.R.attr.switchMinWidth;
 import static android.R.attr.x;
 
 
@@ -61,6 +65,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private ArrayList<String> id = new ArrayList<>();
     private String mBaseUrl;
     private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor isLogged;
     RequestQueue mQueue;
     @BindView(R.id.scanner)
     LinearLayout scannerView;
@@ -87,7 +92,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         Log.e("This ", "This activity was started .....");
         Log.e("Thissss", "" + string.size());
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+        isLogged = PreferenceManager.getDefaultSharedPreferences(this).edit();
         mQueue = Volley.newRequestQueue(this);
 
         mScannerView = new ZXingScannerView(this);
@@ -139,6 +144,30 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                 Scan();
             }
         });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_log, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
+                Toast.makeText(this, "Logging Out", Toast.LENGTH_LONG).show();
+                isLogged.putBoolean("isloggedIn", false);
+                isLogged.apply();
+                isLogged.commit();
+                Intent intent = new Intent(qrscannerActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
@@ -414,6 +443,5 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
         return null;
     }
-
 
 }

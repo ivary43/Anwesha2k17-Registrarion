@@ -35,4 +35,5 @@
     <string name="payer_college">College</string>
     <string name="nullvalue">Null</string>
     <string name="EnterValue">Enter the amount </string>
+    <string name="log_out">Log Out</string>
 </resources>

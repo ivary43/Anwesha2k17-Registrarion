@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         isLoggedin=PreferenceManager.getDefaultSharedPreferences(this) ;
         mUrl = getString(R.string.url_login);
 
+        //to check whether user is already signed
         if( isLoggedin.getBoolean("isloggedIn",false))
         {
             Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 //        //TODO: set the Api call
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
@@ -226,9 +226,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e("TAgggggggg", e.getMessage());
         }
-
         return null;
-
     }
 
 }
