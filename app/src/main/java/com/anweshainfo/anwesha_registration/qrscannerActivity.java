@@ -86,7 +86,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         //mMakepaymentUrl=getResources().getString(R.string.makePaymentUrl);
         Log.e("This ", "This activity was started .....");
         Log.e("Thissss", "" + string.size());
-        mSharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mQueue = Volley.newRequestQueue(this);
 
@@ -103,7 +103,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             Log.e("Error in Json", e.toString());
         }
         string = filterEventName(jsonObject);
-        id=filterEventid(jsonObject) ;
+        id = filterEventid(jsonObject);
 
 
         //set the array adapter
@@ -198,8 +198,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     protected void onResume() {
         super.onResume();
-
-        //TODO: fix the camera issue
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();
 
     }
 
@@ -414,7 +414,6 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 
         return null;
     }
-
 
 
 }

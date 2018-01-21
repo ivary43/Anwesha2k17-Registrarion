@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
 //        //TODO: set the Api call
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.v("Response:", response);
-                                    sharedPreferences.putString("jsonResponse",response) ;
+                                    sharedPreferences.putString("jsonResponse", response);
                                     sharedPreferences.apply();
 
                                     try {
@@ -110,23 +109,15 @@ public class MainActivity extends AppCompatActivity {
                                         JSONObject jsonObject = new JSONObject(response);
                                         int status = Integer.parseInt(jsonObject.getString(getString(R.string.JSON_status)));
                                         //extracting the key from the user call
-                                        String key = getKey(jsonObject) ;
+                                        String key = getKey(jsonObject);
                                         sharedPreferences.putString("keyPay", key);
                                         sharedPreferences.apply();
 
                                         switch (status) {
                                             case 200:
-                                                //filter the eventsname from the response
-                                                mEventsName = filterEventName(jsonObject);
-                                                mEventId = filterEventid(jsonObject);
-
                                                 Toast.makeText(getApplicationContext(), "Log In Successful" + mEventsName.size(), Toast.LENGTH_LONG).show();
-
-
                                                 //filter the eventid
                                                 Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
-                                                intent.putStringArrayListExtra("mEventsName", mEventsName);
-                                                intent.putStringArrayListExtra("mEventId", mEventId);
                                                 startActivity(intent);
 
 
@@ -219,70 +210,18 @@ public class MainActivity extends AppCompatActivity {
         passwordWrapper.setHint(getString(R.string.password_hint));
     }
 
-    private ArrayList<String> filterEventName(JSONObject jsonObject) {
-        try {
-            JSONObject special = jsonObject.getJSONObject("special");
-            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
-            //getting the number of count of events
-            int count = eventOrganizer.getInt("eveCount");
-            String name;
-            ArrayList<String> eventName = new ArrayList<>();
-
-
-            //filling the arraylist
-            for (int i = 0; i < count; ++i) {
-                JSONObject events = eventOrganizer.getJSONObject("" + i);
-                name = events.getString("name");
-                eventName.add(name);
-            }
-            return eventName;
-
-        } catch (JSONException e) {
-            Log.e("Mainactivity.class ", " Error in parsing json event " + e.getMessage());
-        }
-        return null;
-    }
-
-    private ArrayList<String> filterEventid(JSONObject jsonObject) {
-        try {
-            JSONObject special = jsonObject.getJSONObject("special");
-            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
-            //getting the number of count of events
-            int count = eventOrganizer.getInt("eveCount");
-            String id;
-            ArrayList<String> eventId = new ArrayList<>();
-            Log.e("dhjfhfdfjjjjjj", "this sis ssijfjsds sd ssfsf fsf" + count);
-            //filling the arraylist
-            for (int i = 0; i < count; ++i) {
-                JSONObject events = eventOrganizer.getJSONObject("" + i);
-                id = events.getString("id");
-                eventId.add(id);
-            }
-
-            return eventId;
-
-        } catch (JSONException e) {
-            Log.e("Mainactivity.class ", " Error in parsing json id " + e.getMessage());
-        }
-
-        return null;
-    }
-
-    private  String getKey( JSONObject jsonObject )
-    {
+    private String getKey(JSONObject jsonObject) {
 
         try {
             JSONObject special = jsonObject.getJSONObject("special");
             String key = special.getString("isRegTeam");
-            return  key ;
+            return key;
 
-        }
-        catch ( JSONException e)
-        {
-            Log.e("TAgggggggg",e.getMessage());
+        } catch (JSONException e) {
+            Log.e("TAgggggggg", e.getMessage());
         }
 
-        return  null ;
+        return null;
 
     }
 
