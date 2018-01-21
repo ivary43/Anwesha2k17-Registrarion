@@ -1,55 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
         android:text="@string/select_event_name"
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-light"/>
+        android:textSize="20sp" />
 
     <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinner_events_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/spinner_events_name"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/drop_dark"
-        android:popupBackground="@color/gray_dark"
         android:fadingEdgeLength="2dp"
-        android:layout_marginRight="8dp"
-        
-        >
-    </android.support.v7.widget.AppCompatSpinner>
+        android:popupBackground="@color/gray_dark" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center|center_vertical"
         android:id="@+id/scanner"
-        android:layout_marginTop="78dp">
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:src="@drawable/ic_qrcode_scan"
-        android:layout_gravity="center"
-        android:layout_marginTop="18dp"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/scan"
-        android:textSize="26sp"
-        android:textColor="@color/cardview_light_background"
-        android:layout_marginTop="18dp"
-        android:fontFamily="sans-serif-light"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_qrcode_scan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/scan"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#75000000">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Sr No."
+            android:textColor="@color/colorSignUp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Name"
+            android:textColor="@color/colorSignUp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="ANW ID"
+            android:textColor="@color/colorSignUp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_participants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#75000000"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical" />
 </LinearLayout>

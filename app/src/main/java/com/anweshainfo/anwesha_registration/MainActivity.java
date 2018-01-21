@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                         //extracting the key from the user call
                                         String key = getKey(jsonObject);
                                         sharedPreferences.putString("keyPay", key);
+                                        sharedPreferences.putString("key", jsonObject.getString("key"));
                                         sharedPreferences.apply();
 
                                         switch (status) {
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                                                 startActivity(intent);
 
 
-                                                int userID = Integer.parseInt(jsonObject.getString("userID"));
+//                                                int userID = Integer.parseInt(jsonObject.getString("userID"));
                                                 //TODO:process json response
                                                 finish();
                                                 break;

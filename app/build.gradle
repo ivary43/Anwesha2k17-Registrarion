@@ -34,6 +34,7 @@ dependencies {
     // Version 23+ is required
 
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'me.dm7.barcodescanner:zxing:1.9.8'

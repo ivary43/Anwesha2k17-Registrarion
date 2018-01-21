@@ -11,17 +11,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,11 +33,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.anweshainfo.anwesha_registration.Adapter.CustomSpinnerAdapter;
+import com.anweshainfo.anwesha_registration.Adapter.RVAdapter;
+import com.anweshainfo.anwesha_registration.model.Participant;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,8 +52,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import static android.R.attr.switchMinWidth;
+
 import static android.R.attr.x;
+
 
 /**
  * Created by manish on 27/10/17.
@@ -52,7 +62,6 @@ import static android.R.attr.x;
 
 public class qrscannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private SharedPreferences.Editor isLogged;
     RequestQueue mQueue;
     @BindView(R.id.scanner)
@@ -60,11 +69,18 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     @BindView(R.id.spinner_events_name)
     Spinner eventsspinner;
     private ZXingScannerView mScannerView;
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private ArrayAdapter<String> spinnerArrayAdapter;
     private ArrayList<String> string = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
+    private ArrayList<Participant> participants = new ArrayList<>();
     private String mBaseUrl;
     private SharedPreferences mSharedPreferences;
+    private RVAdapter rvAdapter;
+
+    @BindView(R.id.rv_participants)
+    RecyclerView recyclerView;
+
     private String eventName;
     private String eventId;
     private boolean isPaymentReg = false;
@@ -101,13 +117,14 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         }
         string = filterEventName(jsonObject);
         id = filterEventid(jsonObject);
-
+        eventId = id.get(0);
 
         //set the array adapter
         customSpinnerAdapter = new CustomSpinnerAdapter(this, string);
         eventsspinner.setAdapter(customSpinnerAdapter);
 
         eventsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 show(i);
@@ -121,7 +138,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                     iseveReg = true;
                     isPaymentReg = false;
                 }
-
+                setUpRV();
             }
 
             @Override
@@ -137,6 +154,69 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             }
         });
 
+        rvAdapter = new RVAdapter(participants);
+        recyclerView.setAdapter(rvAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setUpRV();
+    }
+
+    private void setUpRV() {
+        participants.clear();
+        rvAdapter.notifyDataSetChanged();
+        String postUrl = "http://www.anwesha.info/events/getReg/" + eventId + "/";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, postUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("Response11:", response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int status = jsonObject.getInt("status");
+                            if (status == 1) {
+                                fillRV(jsonObject);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("Error : ", error.toString());
+                        error.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userID", getuID().substring(3));
+                Log.e("USERID : ", getuID().substring(3));
+                Log.e("AUTHKEY : ", mSharedPreferences.getString("key", ""));
+                params.put("authKey", mSharedPreferences.getString("key", ""));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
+        mQueue.add(stringRequest);
+    }
+
+    private void fillRV(JSONObject jsonObject) throws JSONException {
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        participants.clear();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject j1 = jsonArray.getJSONObject(i);
+            participants.add(new Participant(j1.getString("name"), j1.getString("pId")));
+        }
+        rvAdapter.notifyDataSetChanged();
     }
 
     @Override
