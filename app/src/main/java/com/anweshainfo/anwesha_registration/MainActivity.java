@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     String mPassword;
     RequestQueue mQueue;
     SharedPreferences.Editor sharedPreferences;
+    SharedPreferences isLoggedin ;
     private String mUrl;
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private Matcher matcher;
@@ -60,16 +61,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mQueue = Volley.newRequestQueue(this);
+        isLoggedin=PreferenceManager.getDefaultSharedPreferences(this) ;
+        mUrl = getString(R.string.url_login);
+
+        if( isLoggedin.getBoolean("isloggedIn",false))
+        {
+            Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
+            startActivity(intent);
+        }
         setContentView(R.layout.login_page);
         ButterKnife.bind(this);
 
         setHints();
-        mQueue = Volley.newRequestQueue(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this).edit();
-
-        mUrl = getString(R.string.url_login);
         forgotPassword = (TextView) findViewById(R.id.forgot_password);
-
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 if (b) {
                     //saving username for sharing the uId for post request
                     sharedPreferences.putString("uID", mEmail);
-
-
                     //Code for sending the details
                     Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
                     buttonSignIn.setVisibility(View.GONE);
@@ -115,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
                                         switch (status) {
                                             case 200:
+                                                sharedPreferences.putBoolean("isloggedIn",true);
+                                                sharedPreferences.apply();
                                                 Toast.makeText(getApplicationContext(), "Log In Successful" + mEventsName.size(), Toast.LENGTH_LONG).show();
                                                 //filter the eventid
                                                 Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
