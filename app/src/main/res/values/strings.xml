@@ -4,6 +4,7 @@
     <string name="SignUp">Sign Up</string>
     <string name="SignIn">Sign In</string>
     <string name="email_id_hint">Email ID</string>
+    <string name="anwesha_id_hint">Anwesha ID</string>
     <string name="password_hint">Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="register_url">http://celesta.org.in/api/register</string>
@@ -34,5 +35,6 @@
     <string name="payer_feePaid">Fee Paid</string>
     <string name="payer_college">College</string>
     <string name="nullvalue">Null</string>
-    <string name="EnterValue">Enter the amount </string>
+    <string name="EnterValue">Enter fee paid (overwrites old value)</string>
+    <string name="phone_no">Phone No.</string>
 </resources>
