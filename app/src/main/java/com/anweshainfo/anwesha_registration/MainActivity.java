@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                                                 break;
                                             case 403:
                                                 Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
-                                                finish();
                                                 break;
                                             default:
                                                 Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();

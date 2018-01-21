@@ -247,6 +247,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                 isLogged.apply();
                 isLogged.commit();
                 Intent intent = new Intent(qrscannerActivity.this, MainActivity.class);
+                finish();
                 startActivity(intent);
                 return true;
             default:
