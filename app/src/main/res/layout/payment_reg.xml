@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:gravity="center">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,27 +17,60 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/payer_name"
-            android:textSize="24sp"
-            android:textColor="@color/cardview_light_background"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/anwesha_id_hint"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
 
             />
+
+        <TextView
+            android:id="@+id/anwesha_id_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:text="@string/nullvalue"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+            android:layout_marginLeft="8dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/nullvalue"
-                android:textSize="24sp"
-                android:gravity="end"
-                android:textColor="@color/colorPrimaryLight"
-                android:layout_marginRight="24dp"
+                android:layout_weight="1"
                 android:fontFamily="sans-serif-light"
+                android:text="@string/payer_name"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp"
+
+            />
+            <TextView
+                android:id="@+id/name_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:gravity="end"
+                android:text="@string/nullvalue"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="24sp"
                 />
     </LinearLayout>
 
@@ -42,27 +80,28 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             android:text="@string/payer_college"
-            android:textSize="24sp"
             android:textColor="@color/cardview_light_background"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="8dp"
+            android:textSize="24sp"
 
             />
         <TextView
+            android:id="@+id/college_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:text="@string/nullvalue"
-            android:textSize="24sp"
-            android:gravity="end"
-            android:textColor="@color/colorPrimaryLight"
             android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:text="@string/nullvalue"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="24sp"
             />
     </LinearLayout>
 
@@ -72,27 +111,28 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             android:text="@string/payer_city"
-            android:textSize="24sp"
             android:textColor="@color/cardview_light_background"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="8dp"
+            android:textSize="24sp"
 
             />
         <TextView
+            android:id="@+id/city_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:text="@string/nullvalue"
-            android:textSize="24sp"
-            android:gravity="end"
-            android:textColor="@color/colorPrimaryLight"
             android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:text="@string/nullvalue"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="24sp"
             />
     </LinearLayout>
     <LinearLayout
@@ -101,53 +141,116 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/payer_feePaid"
-            android:textSize="24sp"
-            android:textColor="@color/cardview_light_background"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/phone_no"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
 
             />
         <TextView
+            android:id="@+id/phone_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:text="@string/nullvalue"
-            android:textSize="24sp"
-            android:gravity="end"
-            android:textColor="@color/colorPrimaryLight"
             android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:text="@string/nullvalue"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/email_id_hint"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp"
+
+                />
+
+            <TextView
+                android:id="@+id/email_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+                android:gravity="end"
+                android:text="@string/nullvalue"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="24sp"
             />
     </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/payer_feePaid"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/fee_paid_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:gravity="end"
+                android:text="@string/nullvalue"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="24sp" />
+        </LinearLayout>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="6dp"
         android:text="@string/EnterValue"
         android:textColor="#fff"
-        android:layout_margin="6dp"
         android:textSize="22sp"/>
 
     <EditText
+        android:id="@+id/payment_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
         android:layout_margin="16dp"
-        android:id="@+id/payment_value"/>
+        android:background="@color/colorPrimaryLight" />
 
     <Button
+        android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/submit_button"/>
+        android:text="Submit" />
 
 
 </LinearLayout>
+</ScrollView>

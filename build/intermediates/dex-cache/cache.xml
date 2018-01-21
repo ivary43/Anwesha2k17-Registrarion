@@ -2,85 +2,40 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/home/manish/.android/build-cache/e3dae530cbd95a891c0b2aa14c50ead9b71f60c5/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Muks/.android/build-cache/988b27176f0a12b5eb6675606d71b3843c37aef0/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="26.0.2"
-        sha1="e176fd06c2ad5b50a2f5cb4de6000a83a7cb48f5">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7bdbe078e92a37cbf46a2fe157ff87807ce56f2e/classes.dex" />
+        sha1="414c5172d9739a35339700d133288418059e7d83">
+        <dex dex="/Users/Muks/AndroidStudioProjects/Anwesha2k17-Registrarion/app/build/intermediates/pre-dexed/debug/classes_082a58fb7cbdd6e46f9cbc27741a6d3f7fee7319.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/manish/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.2/3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf/gson-2.8.2.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Muks/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.2/3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf/gson-2.8.2.jar"
+        jumboMode="false"
         optimize="true"
         revision="26.0.2"
         sha1="3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.8.2_c717c221ba0f690402b7ced4b04e21585757eed6/classes.dex" />
+        <dex dex="/Users/Muks/AndroidStudioProjects/Anwesha2k17-Registrarion/app/build/intermediates/pre-dexed/debug/gson-2.8.2_b2d917e1b4a9a7db161c8822c956829e66981388.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/manish/.android/build-cache/19677027e3cabec07acbd7c4d88c97470790b52e/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Muks/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.3.0/73c49077166faa4c3c0059c5f583d1d7bd1475fe/core-3.3.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="26.0.2"
-        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_77743aa532208d6e42f49ece6b48799c0425f22a/classes.dex" />
+        sha1="73c49077166faa4c3c0059c5f583d1d7bd1475fe">
+        <dex dex="/Users/Muks/AndroidStudioProjects/Anwesha2k17-Registrarion/app/build/intermediates/pre-dexed/debug/core-3.3.0_69ee8340bd5721c912a49351516c55de11892880.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Muks/.android/build-cache/9d69e65e3acdb4e4a17b59d56b3b8c30169d1b3f/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="26.0.2"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_433e1658eb07e5b453d40bdc49adb96f096103a8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/manish/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.8.1/bc373fb6bc7bca3035041b924f158fd2b946ee8d/butterknife-annotations-8.8.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="bc373fb6bc7bca3035041b924f158fd2b946ee8d">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-annotations-8.8.1_2db8fa6eaf55a23e9d28dc5dcfbeb748cdb10b68/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/manish/.android/build-cache/4fa961dc92b9cbb15d18a9d1e500e82749b5e579/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fed222b146191b457484f13165e1ab55c28794a7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="f8e63e44ebb2712e00817576b33bb4f5f04d541f">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_60a3a3de1c23d3b334970e41f78c9a320ddef194/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/manish/.android/build-cache/7412a97a95709d945f22c9ba441055c9f3312045/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="6a2bcb61342d09fe9acf55c9daf63961c8866cc0">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_740275286b508738f4ba02d83e195e2adae6f8b1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/manish/.android/build-cache/0271e694f34e285b56a223b7030af3e58033d257/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
-        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7a581d6daf7ba64fdee48d5aac0e95e287bac12f/classes.dex" />
+        sha1="0b723383fcc5c9e6d233f12cf3670c153dcb9f72">
+        <dex dex="/Users/Muks/AndroidStudioProjects/Anwesha2k17-Registrarion/app/build/intermediates/pre-dexed/debug/classes_04db2ef1cc311ab3fd73b8306d30f689ed5467dd.jar" />
     </item>
 
 </items>
