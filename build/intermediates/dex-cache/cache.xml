@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/manish/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.2/3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf/gson-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf">
+        <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.8.2_c717c221ba0f690402b7ced4b04e21585757eed6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/manish/.android/build-cache/19677027e3cabec07acbd7c4d88c97470790b52e/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -52,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="e1b131f886ccbc0cd0869dd54987fb331ed01c9d">
+        sha1="f8e63e44ebb2712e00817576b33bb4f5f04d541f">
         <dex dex="/home/manish/Documents/Work/Anwesha2k17-Registrarion/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_60a3a3de1c23d3b334970e41f78c9a320ddef194/classes.dex" />
     </item>
     <item

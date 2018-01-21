@@ -1,6 +1,9 @@
 package com.anweshainfo.anwesha_registration.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,6 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.anweshainfo.anwesha_registration.R;
-
 import java.util.ArrayList;
 
 /**
@@ -20,12 +22,14 @@ public class CustomSpinnerAdapter  extends BaseAdapter implements SpinnerAdapter
         ArrayList<String> mString = new ArrayList<>();
         private  Context mcontext ;
         private LayoutInflater minflater ;
-        public  CustomSpinnerAdapter(Context context , ArrayList<String> string )
-        {       this.mString=string ;
-                this.mcontext=context ;
+        private SharedPreferences mSharedPreference ;
+
+
+        public  CustomSpinnerAdapter(Context context , ArrayList<String> string ) {
+            this.mString = string;
+            this.mcontext = context;
 
         }
-
 
     @Override
     public int getCount() {

@@ -82,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this,qrscannerActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
 
 //        //TODO: set the Api call
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 if (b) {
                     //saving username for sharing the uId for post request
                     sharedPreferences.putString("uID", mEmail);
-                    sharedPreferences.apply();
+
+
                     //Code for sending the details
                     Toast.makeText(getApplicationContext(), "Logging in..", Toast.LENGTH_SHORT).show();
                     buttonSignIn.setVisibility(View.GONE);
@@ -109,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.v("Response:", response);
-
+                                    sharedPreferences.putString("jsonResponse",response) ;
+                                    sharedPreferences.apply();
 
                                     try {
 
@@ -129,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                                                 Toast.makeText(getApplicationContext(), "Log In Successful" + mEventsName.size(), Toast.LENGTH_LONG).show();
 
 
-//                                                //filter the eventid
+                                                //filter the eventid
                                                 Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
                                                 intent.putStringArrayListExtra("mEventsName", mEventsName);
                                                 intent.putStringArrayListExtra("mEventId", mEventId);

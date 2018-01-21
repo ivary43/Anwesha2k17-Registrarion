@@ -28,11 +28,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.anweshainfo.anwesha_registration.Adapter.CustomSpinnerAdapter;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +74,9 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private boolean iseveReg = false;
     private String paymentRegId = "0";
     private String mMakepaymentUrl;
-    private CustomSpinnerAdapter customSpinnerAdapter ;
+    private CustomSpinnerAdapter customSpinnerAdapter;
+    private JSONObject jsonObject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,25 +84,30 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         ButterKnife.bind(this);
         mBaseUrl = getResources().getString(R.string.url_register);
         //mMakepaymentUrl=getResources().getString(R.string.makePaymentUrl);
+        Log.e("This ", "This activity was started .....");
+        Log.e("Thissss", "" + string.size());
+        mSharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
 
         mQueue = Volley.newRequestQueue(this);
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mScannerView = new ZXingScannerView(this);
         mScannerView.setAutoFocus(true);
 
-
-
         checkPermission();
 
-        //Extracting the event data
-        string = getIntent().getStringArrayListExtra("mEventsName");
-        id = getIntent().getStringArrayListExtra("mEventId");
+        //extracting the json response
+        String response = mSharedPreferences.getString("jsonResponse", "");
+        try {
+            jsonObject = new JSONObject(response);
+        } catch (Exception e) {
+            Log.e("Error in Json", e.toString());
+        }
+        string = filterEventName(jsonObject);
+        id=filterEventid(jsonObject) ;
 
 
         //set the array adapter
-        customSpinnerAdapter  = new CustomSpinnerAdapter( this,string) ;
+        customSpinnerAdapter = new CustomSpinnerAdapter(this, string);
         eventsspinner.setAdapter(customSpinnerAdapter);
 
         eventsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -129,7 +140,38 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             }
         });
 
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("savedInstanceEvent", string);
+        outState.putStringArrayList("savedInstanceID", id);
+
+    }
+
+    private ArrayList<String> filterEventName(JSONObject jsonObject) {
+        try {
+            JSONObject special = jsonObject.getJSONObject("special");
+            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
+            //getting the number of count of events
+            int count = eventOrganizer.getInt("eveCount");
+            String name;
+            ArrayList<String> eventName = new ArrayList<>();
+
+
+            //filling the arraylist
+            for (int i = 0; i < count; ++i) {
+                JSONObject events = eventOrganizer.getJSONObject("" + i);
+                name = events.getString("name");
+                eventName.add(name);
+            }
+            return eventName;
+
+        } catch (JSONException e) {
+            Log.e("Mainactivity.class ", " Error in parsing json event " + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -156,8 +198,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     protected void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+
+        //TODO: fix the camera issue
 
     }
 
@@ -347,6 +389,32 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
         // Add the request to the RequestQueue.
         mQueue.add(stringRequest);
     }
+
+    private ArrayList<String> filterEventid(JSONObject jsonObject) {
+        try {
+            JSONObject special = jsonObject.getJSONObject("special");
+            JSONObject eventOrganizer = special.getJSONObject("eventOrganiser");
+            //getting the number of count of events
+            int count = eventOrganizer.getInt("eveCount");
+            String id;
+            ArrayList<String> eventId = new ArrayList<>();
+            Log.e("dhjfhfdfjjjjjj", "this sis ssijfjsds sd ssfsf fsf" + count);
+            //filling the arraylist
+            for (int i = 0; i < count; ++i) {
+                JSONObject events = eventOrganizer.getJSONObject("" + i);
+                id = events.getString("id");
+                eventId.add(id);
+            }
+
+            return eventId;
+
+        } catch (JSONException e) {
+            Log.e("Mainactivity.class ", " Error in parsing json id " + e.getMessage());
+        }
+
+        return null;
+    }
+
 
 
 }
