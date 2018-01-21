@@ -85,7 +85,9 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private String eventId;
     private boolean isPaymentReg = false;
     private boolean iseveReg = false;
+    private boolean isViewReq = false;
     private String paymentRegId = "0";
+    private String viewUserId = "view";
     private String mMakepaymentUrl;
     private CustomSpinnerAdapter customSpinnerAdapter;
     private JSONObject jsonObject;
@@ -116,7 +118,11 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             Log.e("Error in Json", e.toString());
         }
         string = filterEventName(jsonObject);
+        string.add(getString(R.string.view_user_details));
+
         id = filterEventid(jsonObject);
+        id.add(viewUserId);
+
         eventId = id.get(0);
 
         //set the array adapter
@@ -134,9 +140,15 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                 if (eventId.equals(paymentRegId)) {
                     isPaymentReg = true;
                     iseveReg = false;
+                    isViewReq = false;
+                } else if (eventId.equals(viewUserId)) {
+                    isPaymentReg = false;
+                    iseveReg = false;
+                    isViewReq = true;
                 } else {
                     iseveReg = true;
                     isPaymentReg = false;
+                    isViewReq = false;
                 }
                 setUpRV();
             }
@@ -317,7 +329,10 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             makePost(postUrl);
         } else if (isPaymentReg) {
             //launch a new intent to make payment
-            makePaymentReg(rawResult.getText());
+            makePaymentReg(rawResult.getText(), false);
+        } else if (isViewReq) {
+            //launch a new intent to view user
+            makePaymentReg(rawResult.getText(), true);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -464,7 +479,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
      * function launches a new intent with the values of
      * string with the response
      */
-    private void makePaymentReg(String value) {
+    private void makePaymentReg(String value, final boolean viewOnly) {
         String requestUrl = mBaseUrl + value;
 
         // Request a string response from the provided URL.
@@ -477,6 +492,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                         //After getting the response put it in string and start the activity
                         Intent intent = new Intent(qrscannerActivity.this, payment_activity.class);
                         intent.putExtra("jsonresponse", response);
+                        intent.putExtra("viewOnly", viewOnly);
                         startActivity(intent);
                         // Display the first 500 characters of the response string.
 

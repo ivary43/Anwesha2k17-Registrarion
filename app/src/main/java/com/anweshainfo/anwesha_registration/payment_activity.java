@@ -36,6 +36,8 @@ import butterknife.ButterKnife;
 public class payment_activity extends AppCompatActivity {
 
     RequestQueue mQueue;
+    @BindView(R.id.enter_fee_paid_textview)
+    TextView enterFeePaidTextView;
     @BindView(R.id.payment_value)
     EditText amount_payable;
     @BindView(R.id.submit_button)
@@ -70,6 +72,7 @@ public class payment_activity extends AppCompatActivity {
     private String key;
     private SharedPreferences mSharedPreferences;
     private String amount = null;
+    private boolean viewOnly = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,39 +84,49 @@ public class payment_activity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(this);
         jsonresponse = getIntent().getStringExtra("jsonresponse");
 //        jsonresponse = "{\"status\":1,\"http\":200,\"message\":{\"name\":\"Manish Kumar\",\"pId\":\"4224\",\"fbID\":\"-1509447087\",\"college\":\"IIT Patna\",\"sex\":\"M\",\"mobile\":\"8935067180\",\"email\":\"warriorjordan16@gmail.com\",\"dob\":\"1997-11-27\",\"city\":\"Patna\",\"refcode\":\"\",\"feePaid\":\"0\",\"rcv\":\"0\",\"isRegTeam\":\"8924569\",\"confirm\":\"1\",\"time\":\"2017-10-31 16:21:27\",\"iitp\":\"0\",\"qrurl\":\"http:\\/\\/anwesha.info\\/qr\\/anw4224.png\"}}";
+        viewOnly = getIntent().getBooleanExtra("viewOnly", true);
         Log.e("muks", "Response: " + jsonresponse);
         //function call to make the pID
         setupUser(jsonresponse);
         setupUI();
 
-        //getting the key
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        key = mSharedPreferences.getString("keyPay", null);
+        if (!viewOnly) {
+            //getting the key
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            key = mSharedPreferences.getString("keyPay", null);
 
-        //building the base URl
-        mPaymentUrl = getResources().getString(R.string.makePaymentUrl) + personId;
+            //building the base URL
+            mPaymentUrl = getResources().getString(R.string.makePaymentUrl) + personId;
 
-        //getting the uID
-        uId = mSharedPreferences.getString("uID", null);
-        uId = uId.substring(3);
+            //getting the uID
+            uId = mSharedPreferences.getString("uID", null);
+            uId = uId.substring(3);
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //initalising the amount value
-                amount = amount_payable.getText().toString();
-                //trim the text
-                amount.trim();
-                if (amount == null) {
-                    Toast.makeText(getApplicationContext(), " Enter the amount first!!", Toast.LENGTH_LONG).show();
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //initalising the amount value
+                    amount = amount_payable.getText().toString();
+                    //trim the text
+                    amount.trim();
+                    if (amount == null) {
+                        Toast.makeText(getApplicationContext(), " Enter the amount first!!", Toast.LENGTH_LONG).show();
 
-                } else {
-                    Log.e("TAG", amount + "  " + uId + "  " + key + "    " + personId);
-                    makePayment();
+                    } else {
+                        Log.e("TAG", amount + "  " + uId + "  " + key + "    " + personId);
+                        makePayment();
+                    }
+
                 }
-
-            }
-        });
+            });
+            enterFeePaidTextView.setVisibility(View.VISIBLE);
+            amount_payable.setVisibility(View.VISIBLE);
+            submit.setVisibility(View.VISIBLE);
+        } else {
+            enterFeePaidTextView.setVisibility(View.GONE);
+            amount_payable.setVisibility(View.GONE);
+            submit.setVisibility(View.GONE);
+        }
     }
 
 
