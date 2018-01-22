@@ -450,7 +450,12 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put(getString(R.string.event_id), eventId);
-                params.put(getString(R.string.qr_orgid), getuID());
+                params.put("authKey", mSharedPreferences.getString("key", ""));
+                params.put("orgID", getuID().substring(3));
+                Log.e("USERID : ", getuID().substring(3));
+                Log.e("AUTHKEY : ", mSharedPreferences.getString("key", ""));
+                params.put("authKey", mSharedPreferences.getString("key", ""));
+
                 return params;
             }
 
@@ -482,30 +487,103 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
      */
     private void makePaymentReg(String value, final boolean viewOnly) {
         String requestUrl = mBaseUrl + value;
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, requestUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.v("Response:", response);
 
-                        Log.e("TAG Volley", response);
-                        //After getting the response put it in string and start the activity
-                        Intent intent = new Intent(qrscannerActivity.this, payment_activity.class);
-                        intent.putExtra("jsonresponse", response);
-                        intent.putExtra("viewOnly", viewOnly);
-                        startActivity(intent);
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            int status = jsonObject.getInt("http");
+
+                            switch (status) {
+                                case 200:
+                                Intent intent = new Intent(qrscannerActivity.this, payment_activity.class);
+                                intent.putExtra("jsonresponse", response);
+                                intent.putExtra("viewOnly", viewOnly);
+                            startActivity(intent);
                         // Display the first 500 characters of the response string.
+                                    break;
+                                case 400:
+                                    Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 409:
+                                    Toast.makeText(getApplicationContext(), R.string.message_registration_duplicate, Toast.LENGTH_LONG).show();
 
+                                    break;
+                                case 403:
+                                    Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
+
+                                    break;
+                                default:
+                                    Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("Error : ", error.toString());
+                        error.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", error.getMessage());
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("authKey", mSharedPreferences.getString("key", ""));
+                params.put("orgID", getuID().substring(3));
+                Log.e("USERID : ", getuID().substring(3));
+                Log.e("AUTHKEY : ", mSharedPreferences.getString("key", ""));
+                params.put("authKey", mSharedPreferences.getString("key", ""));
+
+                return params;
             }
-        });
-        // Add the request to the RequestQueue.
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
         mQueue.add(stringRequest);
+
+
+
+
+
+
+
+//        // Request a string response from the provided URL.
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, requestUrl,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        Log.e("TAG Volley", response);
+//                        //After getting the response put it in string and start the activity
+//                        Intent intent = new Intent(qrscannerActivity.this, payment_activity.class);
+//                        intent.putExtra("jsonresponse", response);
+//                        intent.putExtra("viewOnly", viewOnly);
+//                        startActivity(intent);
+//                        // Display the first 500 characters of the response string.
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("TAG", error.getMessage());
+//            }
+//        });
+//        // Add the request to the RequestQueue.
+//        mQueue.add(stringRequest);
     }
 
     private ArrayList<String> filterEventid(JSONObject jsonObject) {
