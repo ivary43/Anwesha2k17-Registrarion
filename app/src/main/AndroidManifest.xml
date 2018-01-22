@@ -26,6 +26,7 @@
         <activity
             android:name=".qrscannerActivity"
             android:label="Scan"
+            
            ></activity>
         <activity android:name=".reg_result" android:parentActivityName=".qrscannerActivity">  </activity>
         <activity android:name=".payment_activity" android:parentActivityName=".qrscannerActivity"></activity>

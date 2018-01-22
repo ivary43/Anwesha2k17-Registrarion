@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="500dp"
-        android:text="Succesfully Registered Yo"
+        android:text="Succesfully Registered !!"
         android:textColor="@color/colorPrimaryLight"
         android:textSize="42dp"
         android:gravity="center"

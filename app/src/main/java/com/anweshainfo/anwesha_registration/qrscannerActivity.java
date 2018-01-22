@@ -586,6 +586,8 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
 //        mQueue.add(stringRequest);
     }
 
+
+
     private ArrayList<String> filterEventid(JSONObject jsonObject) {
         try {
             JSONObject special = jsonObject.getJSONObject("special");
