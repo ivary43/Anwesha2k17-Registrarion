@@ -3,10 +3,10 @@ package com.anweshainfo.anwesha_registration;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -43,20 +43,17 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue mQueue;
     SharedPreferences.Editor sharedPreferences;
     SharedPreferences isLoggedin ;
+    @BindView(R.id.button_signin)
+    Button buttonSignIn;
+    @BindView(R.id.eamil_id_wrapper_signin)
+    TextInputLayout emailIDWrapper;
+    @BindView(R.id.password_wrapper_signin)
+    TextInputLayout passwordWrapper;
     private String mUrl;
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private Matcher matcher;
     private ArrayList<String> mEventsName = new ArrayList<>();
     private ArrayList<String> mEventId = new ArrayList<>();
-
-    @BindView(R.id.button_signin)
-    Button buttonSignIn;
-
-    @BindView(R.id.eamil_id_wrapper_signin)
-    TextInputLayout emailIDWrapper;
-
-    @BindView(R.id.password_wrapper_signin)
-    TextInputLayout passwordWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
             startActivity(intent);
+            finish();
         }
         setContentView(R.layout.login_page);
         ButterKnife.bind(this);

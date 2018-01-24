@@ -19,11 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,16 +35,12 @@ import com.android.volley.toolbox.Volley;
 import com.anweshainfo.anwesha_registration.Adapter.CustomSpinnerAdapter;
 import com.anweshainfo.anwesha_registration.Adapter.RVAdapter;
 import com.anweshainfo.anwesha_registration.model.Participant;
-import com.google.gson.Gson;
 import com.google.zxing.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,8 +49,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-import static android.R.attr.x;
-
 
 /**
  * Created by manish on 27/10/17.
@@ -62,14 +56,16 @@ import static android.R.attr.x;
 
 public class qrscannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    private SharedPreferences.Editor isLogged;
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     RequestQueue mQueue;
     @BindView(R.id.scanner)
     LinearLayout scannerView;
     @BindView(R.id.spinner_events_name)
     Spinner eventsspinner;
+    @BindView(R.id.rv_participants)
+    RecyclerView recyclerView;
+    private SharedPreferences.Editor isLogged;
     private ZXingScannerView mScannerView;
-    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private ArrayAdapter<String> spinnerArrayAdapter;
     private ArrayList<String> string = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
@@ -77,10 +73,6 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private String mBaseUrl;
     private SharedPreferences mSharedPreferences;
     private RVAdapter rvAdapter;
-
-    @BindView(R.id.rv_participants)
-    RecyclerView recyclerView;
-
     private String eventName;
     private String eventId;
     private boolean isPaymentReg = false;
@@ -91,11 +83,16 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private String mMakepaymentUrl;
     private CustomSpinnerAdapter customSpinnerAdapter;
     private JSONObject jsonObject;
+    private boolean isCamActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_selector);
+        setUI();
+    }
+
+    private void setUI() {
         ButterKnife.bind(this);
         mBaseUrl = getResources().getString(R.string.url_register);
         //mMakepaymentUrl=getResources().getString(R.string.makePaymentUrl);
@@ -296,11 +293,27 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     }
 
     public void Scan() {
+        isCamActive = true;
         setContentView(mScannerView);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
         mScannerView.setAutoFocus(true);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isCamActive) {
+            mScannerView.stopCamera();
+            isCamActive = false;
+//            mScannerView = null;
+//            this.finish();
+//            Intent intent = new Intent(this, qrscannerActivity.class);
+//            startActivity(intent);
+            setContentView(R.layout.event_selector);
+            setUI();
+        } else
+            super.onBackPressed();
     }
 
     @Override
