@@ -349,11 +349,6 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
             makePaymentReg(rawResult.getText(), true);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan Result");
-        builder.setMessage(rawResult.getText());
-        AlertDialog alert1 = builder.create();
-        alert1.show();
 
         new Thread(new Runnable() {
             @Override
@@ -427,23 +422,23 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
                             switch (status) {
                                 case 200:
 
-                                    Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Scan successful", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(qrscannerActivity.this, reg_result.class);
                                     startActivity(intent);
                                     break;
                                 case 400:
-                                    Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid Anwesha Id", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 409:
-                                    Toast.makeText(getApplicationContext(), R.string.message_registration_duplicate, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),"This ID is already registered", Toast.LENGTH_LONG).show();
 
                                     break;
                                 case 403:
-                                    Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid Id", Toast.LENGTH_LONG).show();
 
                                     break;
                                 default:
-                                    Toast.makeText(getApplicationContext(), "Error logging in. Please try again later", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Error .Please try again later", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -74,17 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         setHints();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        forgotPassword = (TextView) findViewById(R.id.forgot_password);
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri webpage = Uri.parse(getString(R.string.url_forgot_password));
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-            }
-        });
 
 //        //TODO: set the Api call
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                                             case 200:
                                                 sharedPreferences.putBoolean("isloggedIn",true);
                                                 sharedPreferences.apply();
-                                                Toast.makeText(getApplicationContext(), "Log In Successful" + mEventsName.size(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "Log In Successful" , Toast.LENGTH_LONG).show();
                                                 //filter the eventid
                                                 Intent intent = new Intent(MainActivity.this, qrscannerActivity.class);
                                                 startActivity(intent);
@@ -135,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                                                 break;
                                             case 409:
                                                 Toast.makeText(getApplicationContext(), R.string.message_registration_duplicate, Toast.LENGTH_LONG).show();
-                                                finish();
+
                                                 break;
                                             case 403:
                                                 Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
@@ -210,7 +199,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setHints() {
-        emailIDWrapper.setHint(getString(R.string.email_id_hint));
+        emailIDWrapper.setHint(getString(R.string.anwesha_id_hint));
+
         passwordWrapper.setHint(getString(R.string.password_hint));
     }
 

@@ -34,7 +34,8 @@
                 android:hint="@string/anwesha_id_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textColor="#fff"/>
+                android:textColor="#fff"
+                />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -54,19 +55,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColor="@color/colorPrimaryLight" />
-            <TextView
-                android:id="@+id/forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/forgot_password"
-                android:textColor="@color/colorSignUp"
-                android:textSize="16dp" />
+           
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
