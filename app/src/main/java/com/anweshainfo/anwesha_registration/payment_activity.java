@@ -178,6 +178,7 @@ public class payment_activity extends AppCompatActivity {
                                 case 200:
 
                                     Toast.makeText(getApplicationContext(), "Payment Successful", Toast.LENGTH_LONG).show();
+                                    finish();
                                     break;
                                 case 400:
                                     Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_SHORT).show();
