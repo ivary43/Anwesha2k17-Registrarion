@@ -138,7 +138,7 @@ public class payment_activity extends AppCompatActivity {
             //Extracting user info
             String pID = message.getString("pId");
             if (pID != null) {
-                personId = "ANW" + pID;
+                personId =  pID;
                 mName = message.getString("name");
                 mCollege = message.getString("college");
                 mPhoneNo = message.getString("mobile");
@@ -211,8 +211,9 @@ public class payment_activity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put(getResources().getString(R.string.payment_uID), uId);
-                params.put(getResources().getString(R.string.payment_val), key);
+               // params.put(getResources().getString(R.string.payment_val), key);
                 params.put(getResources().getString(R.string.payment_amt), "" + amount);
+                params.put("authKey", mSharedPreferences.getString("key", ""));
                 return params;
             }
 
