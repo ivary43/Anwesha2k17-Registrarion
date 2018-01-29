@@ -172,12 +172,12 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private void setUpRV() {
         participants.clear();
         rvAdapter.notifyDataSetChanged();
-        String postUrl = "http://www.anwesha.info/events/getReg/" + eventId + "/";
+        String postUrl = "https://www.anwesha.info/events/getReg/" + eventId + "/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, postUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("Response11:", response);
+                        Log.v("ResponseX:", response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int status = jsonObject.getInt("status");
@@ -221,6 +221,7 @@ public class qrscannerActivity extends AppCompatActivity implements ZXingScanner
     private void fillRV(JSONObject jsonObject) throws JSONException {
         JSONArray jsonArray = jsonObject.getJSONArray("data");
         participants.clear();
+        Log.e("REsponseX1",jsonArray.length()+"") ;
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject j1 = jsonArray.getJSONObject(i);
             participants.add(new Participant(j1.getString("name"), j1.getString("pId")));

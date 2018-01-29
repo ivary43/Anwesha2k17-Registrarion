@@ -23,10 +23,10 @@
     <string name="url_forgot_password">http://celesta.org.in/reset</string>
     <string name="url_login">https://anwesha.info/login</string>
     <string name="select_event_name">Select Event</string>
-    <string name="url_register">http://anwesha.info/qrReg/</string>
+    <string name="url_register">https://anwesha.info/qrReg/</string>
     <string name="qr_orgid">orgID</string>
     <string name="event_id">eveID</string>
-    <string name="makePaymentUrl">http://anwesha.info/pay/</string>
+    <string name="makePaymentUrl">https://anwesha.info/pay/</string>
     <string name="payment_uID">uID</string>
     <string name="payment_amt">amt</string>
     <string name="payment_val">val</string>
